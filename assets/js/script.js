@@ -37,12 +37,51 @@ var generatePassword = function() {
 	pl = getPasswordLength();
 	console.log("pl = " + pl);
 	
+	//put together the regex String
+	expr = "[";
+	expr += lc ? "a-z" : "";
+	expr += uc ? "A-Z" : "";
+	expr += nc ? "0-9" : "";
+	expr += sc ? "#%&():;<>@_~\!\$\'\*\+\,\-\.\/\=\?\[\\\]\^\`\|\~" : "";
+	expr += "]";
+	
+	console.log("expr = " + expr);
+	
+	//build the regex Object
+	expr = new RegExp(expr);
+	
+	//build the password
+	password = "";
+	
+	while (password.length < pl) {
+	
+		//generate a random character
+		rand = Math.floor(Math.random() * 128);
+		console.log("rand = " + rand);
+		chr = String.fromCharCode(rand);
+		console.log("chr = " + chr);
+		
+		//compare the character to the expression
+		result = expr.exec(chr);
+		if (result) {
+			//if it's valid, add it
+			result = result.toString();
+			password += result;
+			console.log(password);
+		}
+		console.log(result);
+	}
 
-
-	return "1234";
+	return password;
 }
 
-
+var test = function() {
+	str = "[a-zA-Z0-9#%&():;<>@_~]";
+	var expr = new RegExp(str);
+	result = expr.exec("a");
+	if (result) {result = result.toString();}
+	console.log(result);
+}
 
 
 
