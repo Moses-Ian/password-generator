@@ -1,4 +1,6 @@
-// Assignment code here
+const MAX_ATTEMPTS = 30;
+const SYMBOLS = "~`!@#$%^&*(){}[]?/+=|\_-:;";
+
 var getPasswordLength = function() {
 	
 	pl = window.prompt("Please enter a length for your password from 8 to 128 characters:");
@@ -14,60 +16,44 @@ var getPasswordLength = function() {
 
 var generatePassword = function() {
 
-	do {
-		// prompt for character types
-		lc = window.confirm("Do you want lowercase characters?");
-		uc = window.confirm("Do you want uppercase characters?");
-		nc = window.confirm("Do you want numbers?");
-		sc = window.confirm("Do you want special characters?");
-	}while (!(lc || uc || nc || sc));	//VALIDATION - NO CHARACTER TYPES selected
+	//get min and max lengths
+	const minLength = document.getElementById("minimum").value || document.getElementById("minimum").placeholder;
+	const maxLength = document.getElementById("maximum").value || document.getElementById("maximum").placeholder;
 
-	//prompt for password length
-	pl = getPasswordLength();
-	
-	//put together the regex String
-	expr = "[";
-	expr += lc ? "a-z" : "";
-	expr += uc ? "A-Z" : "";
-	expr += nc ? "0-9" : "";
-	expr += sc ? "#%&():;<>@_~\!\$\'\*\+\,\-\.\/\=\?\[\\\]\^\`\|\~" : "";
-	expr += "]";
-	
-	//build the regex Object
-	expr = new RegExp(expr);
-	
 	//build the password
-	password = "";
+	let password = "";
+	let attempts = 0;
 	
-	while (password.length < pl) {
-	
-		//generate a random character
-		rand = Math.floor(Math.random() * 128);
-		chr = String.fromCharCode(rand);
+	while (password.length < maxLength-2 && attempts < MAX_ATTEMPTS) {
+		//pick a random word
+		let word = WORDS[Math.floor(Math.random() * WORDS.length)];
+		word = word[0] + word.slice(1).toLowerCase();
 		
-		//compare the character to the expression
-		result = expr.exec(chr);
-		if (result) {
+		//see if the word will fit
+		if (password.length + word.length < maxLength-2) {
 			//if it's valid, add it
-			result = result.toString();
-			password += result;
+			password += word;
 		}
+		
+		attempts++;
 	}
+	
+	// attach an arbitrary symbol
+	password += SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+	
+	// attach at least one number, and enough to make sure it meets the minimums
+	do {
+		password += Math.floor(Math.random() * 10);
+	} while (password.length < minLength);
+	
 
 	return password;
 }
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
+  document.getElementById("password").value = generatePassword();
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+document.getElementById("generate").addEventListener("click", writePassword);
