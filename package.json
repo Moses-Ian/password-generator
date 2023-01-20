@@ -1,0 +1,32 @@
+{
+  "name": "password-generator",
+  "version": "1.0.0",
+  "description": "Generate passwords that are strong but easy to type",
+  "main": "index.html",
+  "scripts": {
+    "deploy": "gh-pages -d .",
+    "make-word-list": "node ref/makeWordList",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moses-Ian/friendly-parakeet.git"
+  },
+  "keywords": [
+    "password",
+    "generator",
+    "easy",
+    "type",
+    "friendly",
+    "words"
+  ],
+  "author": "Ian Moses",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moses-Ian/friendly-parakeet/issues"
+  },
+  "homepage": "https://github.com/Moses-Ian/friendly-parakeet#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
