@@ -8,7 +8,7 @@ This is a password generator. Simply click the button, answer the prompts, and y
 
 You can access the deployed website here:
 <br>
-https://moses-ian.github.io/friendly-parakeet/
+https://moses-ian.github.io/password-generator/
 
 ### Screenshot
 
